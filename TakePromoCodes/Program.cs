@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using MySql.Data.MySqlClient;
 
 namespace TakePromoCodes
 {
@@ -108,9 +109,27 @@ namespace TakePromoCodes
     {
         static void Main(string[] args)
         {
+            List<String> expected = new List<String>();
+            expected.Add("ABC");
+            String clientCode = "SZGR";
+            DateTime expiryDate = DateTime.Now;
+            DateTime creationDate = DateTime.Now;
+            List<String> codesClass = new List<String>();
+            //codesClass.Add("ABC");
+            //codesClass.Add("AQWEC");
+            //codesClass.Add("ABC");
+            PromoCodes promoCodesClass = new PromoCodes(clientCode, expiryDate, creationDate, codesClass);
+            string connectionString = @"server=snowball-uat-rds.c2pbc0gedoix.us-east-1.rds.amazonaws.com;userid=service;password=lucent-great-yuletide-midst-crime-marlin;database=snowball";
+          //  promoCodesClass.ReadCodesFromMariaDB(connectionString, "SZGR");
+            PromoCodesManipulation promoCodesManipulation = new PromoCodesManipulation(promoCodesClass);
+           // promoCodesManipulation.ReadCodesFromFile(@"D:\SOFT_SERVE_OLD_PC\Promo codes\szgr_10011.txt");
+
+
+            // Act
+            List<String> duplicates = promoCodesClass.DuplicatesInOneFile();
             //szgr
             Console.WriteLine("Hello World!");
-            List<string> codes = Calculation.ReadMe(@"D:\SOFT_SERVE_OLD_PC\Promo codes\szgr_100.txt");
+            List<string> codes = Calculation.ReadMe(@"D:\SOFT_SERVE_OLD_PC\Promo codes\szgr_10011.txt");
             //List<string> promoCodes = Calculation.ReadMe(@"D:\SOFT_SERVE_OLD_PC\Promo codes\Today\NAPUS_SD_46861.csv");
 
             var promoCodes = Calculation.PromoCodes(codes);
