@@ -32,3 +32,15 @@ D:\SOFT_SERVE_OLD_PC\Promo Codes\TakePromoCodes\obj\Debug\netcoreapp2.1\TakeProm
 D:\SOFT_SERVE_OLD_PC\Promo Codes\TakePromoCodes\obj\Debug\netcoreapp2.1\TakePromoCodes.pdb
 D:\SOFT_SERVE_OLD_PC\Promo Codes\TakePromoCodes\obj\Debug\netcoreapp2.1\TakePromoCodes.genruntimeconfig.cache
 D:\SOFT_SERVE_OLD_PC\Promo Codes\TakePromoCodes\obj\Debug\netcoreapp2.1\TakePromoCodes.csproj.CoreCompileInputs.cache
+D:\projects\PromoCodes_HealthCheck\TakePromoCodes\bin\Debug\netcoreapp2.1\TakePromoCodes.deps.json
+D:\projects\PromoCodes_HealthCheck\TakePromoCodes\bin\Debug\netcoreapp2.1\TakePromoCodes.runtimeconfig.json
+D:\projects\PromoCodes_HealthCheck\TakePromoCodes\bin\Debug\netcoreapp2.1\TakePromoCodes.runtimeconfig.dev.json
+D:\projects\PromoCodes_HealthCheck\TakePromoCodes\bin\Debug\netcoreapp2.1\TakePromoCodes.dll
+D:\projects\PromoCodes_HealthCheck\TakePromoCodes\bin\Debug\netcoreapp2.1\TakePromoCodes.pdb
+D:\projects\PromoCodes_HealthCheck\TakePromoCodes\obj\Debug\netcoreapp2.1\TakePromoCodes.AssemblyInfoInputs.cache
+D:\projects\PromoCodes_HealthCheck\TakePromoCodes\obj\Debug\netcoreapp2.1\TakePromoCodes.AssemblyInfo.cs
+D:\projects\PromoCodes_HealthCheck\TakePromoCodes\obj\Debug\netcoreapp2.1\TakePromoCodes.dll
+D:\projects\PromoCodes_HealthCheck\TakePromoCodes\obj\Debug\netcoreapp2.1\TakePromoCodes.pdb
+D:\projects\PromoCodes_HealthCheck\TakePromoCodes\obj\Debug\netcoreapp2.1\TakePromoCodes.genruntimeconfig.cache
+D:\projects\PromoCodes_HealthCheck\TakePromoCodes\obj\Debug\netcoreapp2.1\TakePromoCodes.csprojAssemblyReference.cache
+D:\projects\PromoCodes_HealthCheck\TakePromoCodes\obj\Debug\netcoreapp2.1\TakePromoCodes.csproj.CoreCompileInputs.cache
