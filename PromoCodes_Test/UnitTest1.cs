@@ -188,6 +188,8 @@ namespace PromoCodes_Test
             expected.Add("AAA");
             expected.Add("BBB");
             expected.Add("CCC");
+            expected.Add("1811132");
+            expected.Add("1929544");
 
             // Act
             requiredPromoCodes.ReadCodesFromFile(path);
@@ -276,6 +278,59 @@ namespace PromoCodes_Test
 
             // Assert
             Assert.Catch(() => requiredPromoCodes.ReadCodesFromFile_WithoutTryCatch(path));
+        }
+
+        [Test]
+        public void ReadCodesFromFile_WithoutTryCatch_Test()
+        {
+            // Arrange
+            String path = @"D:\SOFT_SERVE_OLD_PC\Promo codes\promo_codes.txt";
+            String clientCode = "SZGR";
+            DateTime expiryDate = DateTime.Now;
+            DateTime creationDate = DateTime.Now;
+            List<String> codes = new List<String>();
+            PromoCodes requiredPromoCodes = new PromoCodes(clientCode, expiryDate, creationDate, codes);
+
+            List<String> expected = new List<String>();
+            expected.Add("AAA");
+            expected.Add("BBB");
+            expected.Add("CCC");
+            expected.Add("1811132");
+            expected.Add("1929544");
+
+            // Act
+            requiredPromoCodes.ReadCodesFromFile_WithoutTryCatch(path);
+
+            // Assert
+            Assert.AreEqual(expected, requiredPromoCodes.Codes);
+        }
+
+        [Test]
+        public void RemoveDuplicates_Test()
+        {
+            // Arrange
+            List<String> expected = new List<String>();
+            expected.Add("ABC");
+            expected.Add("AQWEC");
+            expected.Add("ABCD");
+            String clientCode = "SZGR";
+            DateTime expiryDate = DateTime.Now;
+            DateTime creationDate = DateTime.Now;
+            List<String> codes = new List<String>();
+            codes.Add("ABC");
+            codes.Add("AQWEC");
+            codes.Add("ABCD");
+            codes.Add("ABC");
+
+            PromoCodes promoCodes = new PromoCodes(clientCode, expiryDate, creationDate, codes);
+
+
+            // Act
+            promoCodes.RemoveDuplicates();
+
+            // Assert
+
+            Assert.AreEqual(expected, promoCodes.Codes);
         }
     }
 
