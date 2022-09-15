@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
 
@@ -47,7 +48,6 @@ namespace TakePromoCodes
                 using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
                 {
                     String line;
-                    line = sr.ReadLine();
                     while ((line = sr.ReadLine()) != null)
                     {
                         if (!line.Equals(String.Empty) && !String.IsNullOrWhiteSpace(line))
@@ -111,6 +111,13 @@ namespace TakePromoCodes
                 }
             }
             return duplicates;
+        }
+
+        public void RemoveDuplicates()
+        {
+            List<String> unique = new List<String>();
+            unique.AddRange(Codes.Distinct());
+            Codes = unique;
         }
 
         public List<String> FindAlreadyExistingPromoCodes(PromoCodes existingPromoCodes)
