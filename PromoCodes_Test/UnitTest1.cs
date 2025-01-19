@@ -30,11 +30,11 @@ namespace PromoCodes_Test
 
 
             // Act
-            List<String> duplicates = promoCodes.DuplicatesInOneFile();
+            promoCodes.DuplicatesInOneFile();
 
             // Assert
 
-            Assert.AreEqual(expected, duplicates);
+            Assert.AreEqual(expected, promoCodes.DuplicatedCodes);
         }
 
         [Test]
@@ -53,11 +53,11 @@ namespace PromoCodes_Test
 
 
             // Act
-            List<String> duplicates = promoCodes.DuplicatesInOneFile();
+            promoCodes.DuplicatesInOneFile();
 
             // Assert
 
-            Assert.AreEqual(expected, duplicates);
+            Assert.AreEqual(expected, promoCodes.DuplicatedCodes);
         }
 
         [Test]
@@ -80,11 +80,11 @@ namespace PromoCodes_Test
 
 
             // Act
-            List<String> duplicates = promoCodes.DuplicatesInOneFile();
+            promoCodes.DuplicatesInOneFile();
 
             // Assert
-            Assert.Contains(expected[0],duplicates);
-            Assert.Contains(expected[1], duplicates);
+            Assert.Contains(expected[0], promoCodes.DuplicatedCodes);
+            Assert.Contains(expected[1], promoCodes.DuplicatedCodes);
         }
 
         [Test]
@@ -102,10 +102,10 @@ namespace PromoCodes_Test
 
 
             // Act
-            List<String> duplicates = promoCodes.DuplicatesInOneFile();
+            promoCodes.DuplicatesInOneFile();
 
             // Assert
-            Assert.AreEqual(expected, duplicates);
+            Assert.AreEqual(expected, promoCodes.DuplicatedCodes);
         }
 
         [Test]
