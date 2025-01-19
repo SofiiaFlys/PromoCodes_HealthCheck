@@ -57,11 +57,7 @@ namespace PromoCodesWork
                 }
                 catch (PromoCodesException ex)
                 {
-                    String duplicatedCodes = String.Empty;
-                    foreach (var duplicate in ex.PromoCode)
-                    {
-                        duplicatedCodes += duplicate + ' ';
-                    }
+                    String duplicatedCodes = String.Join(", ", ex.PromoCode.ToArray());
                     MessageBox.Show(String.Format(ex.Message) + ": " + duplicatedCodes);
                 }
             }
