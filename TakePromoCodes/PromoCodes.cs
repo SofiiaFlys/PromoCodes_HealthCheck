@@ -13,10 +13,16 @@ namespace TakePromoCodes
         private DateTime m_expiryDate;
         private DateTime m_creationDate;
         private List<String> m_codes;
+        private List<String> m_duplicated_codes;
         public String ClientCode{ get; set; }
         public DateTime ExpiryDate { get; set; }
         public DateTime creationDate { get; set; }
         //public List<String> Codes { get; set; }
+        public List<String> DuplicatedCodes
+        {
+            get { return m_duplicated_codes; }
+            set { m_duplicated_codes = value; }
+        }
         public List<String> Codes
         {
             get { return m_codes; }
@@ -27,6 +33,7 @@ namespace TakePromoCodes
         private PromoCodes() 
         {
             m_codes = new List<String>();
+            m_duplicated_codes = new List<string>();
         }
 
         public PromoCodes(String clientCode, DateTime expiryDate, DateTime creationDate, List<String> codes)
@@ -39,6 +46,7 @@ namespace TakePromoCodes
             {
                 m_codes.Add(code);
             }
+            m_duplicated_codes = new List<string>();
         }
 
         public void ReadCodesFromFile(String path)
@@ -94,23 +102,23 @@ namespace TakePromoCodes
             }
             return existedRequiredPromoCodes;
         }
-        public List<String> DuplicatesInOneFile()
+        public void DuplicatesInOneFile()
         {
-            List<String> duplicates = new List<String>();
             for (int i = 0; i < Codes.Count; i++)
             {
                 for (int j = i + 1; j < Codes.Count; j++)
                 {
                     if (i != j && Codes[i] == Codes[j])
                     {
-                        if (!duplicates.Contains(Codes[i]))
-                            duplicates.Add(Codes[i]);
+                        if (!DuplicatedCodes.Contains(Codes[i]))
+                            DuplicatedCodes.Add(Codes[i]);
                             //Codes.RemoveAt(i);
                         break;
                     }
                 }
             }
-            return duplicates;
+            if (DuplicatedCodes.Count > 0)
+                throw new PromoCodesException("Duplicated codes are found in file", DuplicatedCodes);
         }
 
         public void RemoveDuplicates()

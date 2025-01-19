@@ -126,7 +126,7 @@ namespace TakePromoCodes
 
 
             // Act
-            List<String> duplicates = promoCodesClass.DuplicatesInOneFile();
+            promoCodesClass.DuplicatesInOneFile();
             //szgr
             Console.WriteLine("Hello World!");
             List<string> codes = Calculation.ReadMe(@"D:\SOFT_SERVE_OLD_PC\Promo codes\szgr_10011.txt");
