@@ -49,20 +49,22 @@ namespace PromoCodesWork
             }
             else
             {
-                var duplicates = promoCodes.DuplicatesInOneFile();
-                if (duplicates.Count == 0)
-                    MessageBox.Show("No duplicates in one file. All promo codes are unique!");
-                else
+                try
+                {
+                    promoCodes.DuplicatesInOneFile();
+                    if (promoCodes.DuplicatedCodes.Count == 0)
+                        MessageBox.Show("No duplicates in one file. All promo codes are unique!");
+                }
+                catch (PromoCodesException ex)
                 {
                     String duplicatedCodes = String.Empty;
-                    foreach (var duplicate in duplicates)
+                    foreach (var duplicate in promoCodes.DuplicatedCodes)
                     {
                         duplicatedCodes += duplicate + ' ';
                     }
-                    MessageBox.Show(String.Format("There are {0} duplicated codes in file: {1}", duplicates.Count.ToString(), duplicatedCodes));
+                    MessageBox.Show(String.Format(ex.Message) + ": " + duplicatedCodes);
                 }
             }
-
         }
 
         private void button3_Click(object sender, EventArgs e)
