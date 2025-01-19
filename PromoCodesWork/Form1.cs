@@ -58,7 +58,7 @@ namespace PromoCodesWork
                 catch (PromoCodesException ex)
                 {
                     String duplicatedCodes = String.Empty;
-                    foreach (var duplicate in promoCodes.DuplicatedCodes)
+                    foreach (var duplicate in ex.PromoCode)
                     {
                         duplicatedCodes += duplicate + ' ';
                     }

@@ -118,7 +118,7 @@ namespace TakePromoCodes
                 }
             }
             if (DuplicatedCodes.Count > 0)
-                throw new PromoCodesException("Duplocated codes are found in file", DuplicatedCodes);
+                throw new PromoCodesException("Duplicated codes are found in file", DuplicatedCodes);
         }
 
         public void RemoveDuplicates()
