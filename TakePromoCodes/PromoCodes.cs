@@ -104,19 +104,10 @@ namespace TakePromoCodes
         }
         public void DuplicatesInOneFile()
         {
-            for (int i = 0; i < Codes.Count; i++)
-            {
-                for (int j = i + 1; j < Codes.Count; j++)
-                {
-                    if (i != j && Codes[i] == Codes[j])
-                    {
-                        if (!DuplicatedCodes.Contains(Codes[i]))
-                            DuplicatedCodes.Add(Codes[i]);
-                            //Codes.RemoveAt(i);
-                        break;
-                    }
-                }
-            }
+            DuplicatedCodes = Codes.GroupBy(x => x)
+              .Where(g => g.Count() > 1)
+              .Select(y => y.Key)
+              .ToList();
             if (DuplicatedCodes.Count > 0)
                 throw new PromoCodesException("Duplicated codes are found in file", DuplicatedCodes);
         }
