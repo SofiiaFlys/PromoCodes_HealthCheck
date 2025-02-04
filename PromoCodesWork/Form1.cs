@@ -57,11 +57,7 @@ namespace PromoCodesWork
                 }
                 catch (PromoCodesException ex)
                 {
-                    String duplicatedCodes = String.Empty;
-                    foreach (var duplicate in ex.PromoCode)
-                    {
-                        duplicatedCodes += duplicate + ' ';
-                    }
+                    String duplicatedCodes = String.Join(", ", ex.PromoCode.ToArray());
                     MessageBox.Show(String.Format(ex.Message) + ": " + duplicatedCodes);
                 }
             }
@@ -82,11 +78,7 @@ namespace PromoCodesWork
                     MessageBox.Show("There are any required promo code which is already existing. All promo codes are new!");
                 else
                 {
-                    String existedCodes = String.Empty;
-                    foreach (var existedPromoCode in existedPromoCodes)
-                    {
-                        existedCodes += existedPromoCode + ' ';
-                    }
+                    String existedCodes = String.Join(", ", existedPromoCodes.ToArray());
                     MessageBox.Show(String.Format("There are {0} alredy existed promo codes from file: {1}", existedPromoCodes.Count.ToString(), existedCodes));
                 }
             }

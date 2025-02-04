@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
+using System.Text.RegularExpressions;
 
 namespace TakePromoCodes
 {
@@ -17,6 +18,8 @@ namespace TakePromoCodes
         public String ClientCode{ get; set; }
         public DateTime ExpiryDate { get; set; }
         public DateTime creationDate { get; set; }
+
+        public Func<String, String> Format;
         //public List<String> Codes { get; set; }
         public List<String> DuplicatedCodes
         {
@@ -104,19 +107,10 @@ namespace TakePromoCodes
         }
         public void DuplicatesInOneFile()
         {
-            for (int i = 0; i < Codes.Count; i++)
-            {
-                for (int j = i + 1; j < Codes.Count; j++)
-                {
-                    if (i != j && Codes[i] == Codes[j])
-                    {
-                        if (!DuplicatedCodes.Contains(Codes[i]))
-                            DuplicatedCodes.Add(Codes[i]);
-                            //Codes.RemoveAt(i);
-                        break;
-                    }
-                }
-            }
+            DuplicatedCodes = Codes.GroupBy(x => x)
+              .Where(g => g.Count() > 1)
+              .Select(y => y.Key)
+              .ToList();
             if (DuplicatedCodes.Count > 0)
                 throw new PromoCodesException("Duplicated codes are found in file", DuplicatedCodes);
         }
@@ -130,19 +124,11 @@ namespace TakePromoCodes
 
         public List<String> FindAlreadyExistingPromoCodes(PromoCodes existingPromoCodes)
         {
-            List<String> alreadyExistingPromoCodes = new List<String>();
-            foreach (var code in Codes)
-            {
-                foreach (var existingCode in existingPromoCodes.Codes)
-                {
-                    if (code == existingCode)
-                    {
-                        alreadyExistingPromoCodes.Add(code);
-                        break;
-                    }
-                }
-            }
-            return alreadyExistingPromoCodes;
+            var alreadyExistingPromoCodes =
+                from existingCode in existingPromoCodes.Codes
+                where Codes.Any(x => x == existingCode)
+                select existingCode;
+            return alreadyExistingPromoCodes.ToList();
         }
 
         public String MakePromoCodesFormatForDBCheckQuery()
@@ -156,27 +142,30 @@ namespace TakePromoCodes
             requiredFormat = requiredFormat.Remove(pos);
             return requiredFormat;
         }
+        
+        public String PromoCodeFormatted (String code)
+        {
+            String requiredPromoCode = String.Empty;
+            if (!code.Equals(String.Empty))
+            {
+                var delimitedValues = code.Split(',');
+                if (delimitedValues.Length == 2)
+                {
+                    requiredPromoCode = delimitedValues[1].Replace('"', ' ').Trim();
+                }
+                else
+                {
+                    requiredPromoCode = delimitedValues[0];
+                }
+            }
+            return requiredPromoCode;
+        }
 
         public void MakePromoCodesInRequiredFormat()
         {
-            List<string> requiredFormat = new List<string>();
-            foreach (var code in Codes)
-            {
-                if (!code.Equals(String.Empty))
-                {
-                    var delimitedValues = code.Split(',');
-                    if (delimitedValues.Length == 2)
-                    {
-                        var promoCode = delimitedValues[1].Replace('"', ' ').Trim();
-                        requiredFormat.Add(promoCode);
-                    }
-                    else
-                    {
-                        requiredFormat.Add(delimitedValues[0]);
-                    }
-                }
-            }
-            Codes = requiredFormat;
+            Format = PromoCodeFormatted;
+            List<String> Formatted = Codes.Select(str => Format(str)).ToList();
+            Codes = Formatted;
         }
     }
 }
