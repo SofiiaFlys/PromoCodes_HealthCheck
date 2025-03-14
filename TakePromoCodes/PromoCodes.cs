@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TakePromoCodes
 {
-    public class PromoCodes
+    public class PromoCodes: BaseCodes
     {
         private String m_clientCode;
         private DateTime m_expiryDate;
@@ -25,7 +25,7 @@ namespace TakePromoCodes
             get { return m_duplicated_codes; }
             set { m_duplicated_codes = value; }
         }
-        public List<String> Codes
+        public override List<String> Codes
         {
             get { return m_codes; }
             set { m_codes = value; }
