@@ -131,16 +131,19 @@ namespace TakePromoCodes
             return alreadyExistingPromoCodes.ToList();
         }
 
-        public String MakePromoCodesFormatForDBCheckQuery()
+        public String PromoCodeFormattedForDB(String code)
         {
             String requiredFormat = String.Empty;
-            foreach(var code in Codes)
-            {
-                requiredFormat += String.Format("\'{0}\',", code);
-            }
-            int pos = (requiredFormat.Length) - 1;
-            requiredFormat = requiredFormat.Remove(pos);
+            requiredFormat += String.Format("\'{0}\'", code);
             return requiredFormat;
+        }
+
+        public String MakePromoCodesFormatForDBCheckQuery()
+        {
+            Format = PromoCodeFormattedForDB;
+            List<String> codeFormattedForDB = Codes.Select(str => Format(str)).ToList();
+            String query = String.Join(',', codeFormattedForDB);
+            return query;
         }
         
         public String PromoCodeFormatted (String code)
