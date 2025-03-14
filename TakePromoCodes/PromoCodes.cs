@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MySql.Data.MySqlClient;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace TakePromoCodes
 {
@@ -72,7 +73,47 @@ namespace TakePromoCodes
             }
         }
 
-        public async Task ReadCodesFromFilAsync(String filePath)
+        public async Task<bool> DownloadFileFromApiAsync(string apiUrl, string localFilePath)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+                    response.EnsureSuccessStatusCode();
+
+                    using (FileStream fileStream = new FileStream(localFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
+                    {
+                        await response.Content.CopyToAsync(fileStream);
+                    }
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error downloading file: {ex.Message}");
+                    return false;
+                }
+            }
+        }
+
+        public async Task ReadCodesFromFileApiAsync(String apiUrl)
+        {
+            String localFilePath = "downloadedPromoCodes.txt";
+
+            bool downloadSuccess = await DownloadFileFromApiAsync(apiUrl, localFilePath);
+
+            if (downloadSuccess && File.Exists(localFilePath))
+            {
+                await ReadCodesFromFileAsync(localFilePath);
+            }
+            else
+            {
+                Console.WriteLine("Failed to download or access the file.");
+            }
+        }
+
+        public async Task ReadCodesFromFileAsync(String filePath)
         {
             Console.WriteLine("Reading file line by line:");
 
