@@ -39,6 +39,19 @@ namespace TakePromoCodes
             m_duplicated_codes = new List<string>();
         }
 
+        public PromoCodes(List<String> codes)
+        {
+            m_clientCode = "default";
+            m_expiryDate = DateTime.Now;
+            m_creationDate = DateTime.Now;
+            m_codes = new List<String>();
+            foreach (var code in codes)
+            {
+                m_codes.Add(code);
+            }
+            m_duplicated_codes = new List<string>();
+        }
+
         public PromoCodes(String clientCode, DateTime expiryDate, DateTime creationDate, List<String> codes)
         {
             m_clientCode = clientCode;
