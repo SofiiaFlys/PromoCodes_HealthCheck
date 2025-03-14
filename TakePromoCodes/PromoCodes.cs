@@ -2,9 +2,8 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MySql.Data.MySqlClient;
-using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace TakePromoCodes
 {
@@ -70,6 +69,21 @@ namespace TakePromoCodes
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+            }
+        }
+
+        public async Task ReadCodesFromFilAsync(String filePath)
+        {
+            Console.WriteLine("Reading file line by line:");
+
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                String line;
+                while ((line = await reader.ReadLineAsync()) != null)
+                {
+                    if (!line.Equals(String.Empty) && !String.IsNullOrWhiteSpace(line))
+                        Codes.Add(line);
+                }
             }
         }
 
