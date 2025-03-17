@@ -8,6 +8,8 @@ using System.Net.Http;
 
 namespace TakePromoCodes
 {
+
+    public record PromoCodesPrefix(string ClCode, string promoCodePrefix);
     public class PromoCodes: BaseCodes
     {
         private String m_clientCode;
@@ -15,9 +17,11 @@ namespace TakePromoCodes
         private DateTime m_creationDate;
         private List<String> m_codes;
         private List<String> m_duplicated_codes;
+        private PromoCodesPrefix m_prefix;
         public String ClientCode{ get; set; }
         public DateTime ExpiryDate { get; set; }
         public DateTime creationDate { get; set; }
+        public PromoCodesPrefix Prefix { get; set; }
 
         public Func<String, String> Format;
         //public List<String> Codes { get; set; }
@@ -37,6 +41,7 @@ namespace TakePromoCodes
         {
             m_codes = new List<String>();
             m_duplicated_codes = new List<string>();
+            m_prefix = new PromoCodesPrefix("SZGR", "ABC");
         }
 
         public PromoCodes(List<String> codes)
@@ -210,6 +215,7 @@ namespace TakePromoCodes
         {
             Format = PromoCodeFormattedForDB;
             List<String> codeFormattedForDB = Codes.Select(str => Format(str)).ToList();
+            codeFormattedForDB.ToUppercase();
             String query = String.Join(',', codeFormattedForDB);
             return query;
         }
