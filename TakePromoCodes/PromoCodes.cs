@@ -210,6 +210,7 @@ namespace TakePromoCodes
         {
             Format = PromoCodeFormattedForDB;
             List<String> codeFormattedForDB = Codes.Select(str => Format(str)).ToList();
+            codeFormattedForDB.ToUppercase();
             String query = String.Join(',', codeFormattedForDB);
             return query;
         }
